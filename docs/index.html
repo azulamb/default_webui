@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>Default Web UI list</title>
+	<meta name="description" content="Generate random string.">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="apple-touch-icon" sizes="152x152" href="./apple-touch-icon-precomposed.png">
+	<style>
+h1 { text-align: center; }
+body { margin-bottom: 50%; }
+#option { font-size: 2rem; user-select: none; display: flex; position: sticky; top: 0; background: #fff; }
+#option > label { display: grid; grid-template-columns: 2rem 1fr; }
+body.font_size input, body.font_size html-preview, body.font_size select { font-size: 2rem; }
+	</style>
+	<script>
+document.addEventListener('DOMContentLoaded', () => {
+	customElements.define('html-preview', class extends HTMLElement {
+		constructor() {
+			super();
+
+			this.attachShadow({mode: 'open'});
+
+			const style = document.createElement('style');
+			style.textContent = [
+				':host { display: block; --height: 6rem; }',
+				':host > div { display: grid; height: var(--height); grid-template-columns: 50% 50%; }',
+				'textarea { font-size: 1.5rem; }',
+				':host > div > div { box-sizing: border-box; border: 2px solid gray; }',
+				'@media screen and (max-width: 600px) { :host { --height: 12rem; } :host > div { grid-template-columns: 100%; grid-template-rows: 50% 50%; } }',
+			].join('\n');
+
+			const textarea = document.createElement('textarea');
+			textarea.value = this.innerHTML.trim().split(/\r\n|\n|\r/).map((line) => {
+				return line.trim();
+			}).join('\n');
+			if (this.hasAttribute('readonly')) {
+				textarea.readOnly = true;
+			}
+
+			const preview = document.createElement('div');
+			preview.appendChild(document.createElement('slot'));
+
+			const contents = document.createElement('div');
+			contents.appendChild(textarea);
+			contents.appendChild(preview);
+
+			this.shadowRoot.appendChild(style);
+			this.shadowRoot.appendChild(contents);
+		}
+	});
+
+	((input) => {
+		input.addEventListener('change', (event) => {
+			document.body.classList[input.checked ? 'add' : 'remove']('font_size');
+		});
+	})(document.getElementById('font_size'));
+});
+	</script>
+</head>
+<body>
+	<h1>Default Web UI list</h1>
+	<div id="option">
+		<label>
+			<input type="checkbox" id="font_size">
+			font-size: 2rem;
+		</label>
+	</div>
+	<h2 id="input">&lt;<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input" target="_blank" rel="noopener">input</a>&gt;</h2>
+
+	<h3 id="input_hidden">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/hidden" target="_blank" rel="noopener">hidden</a>"</h3>
+	<html-preview>
+		<input type="hidden">
+	</html-preview>
+
+	<h3 id="input_button">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/button" target="_blank" rel="noopener">button</a>"</h3>
+	<html-preview>
+		<input type="button" value="button">
+	</html-preview>
+
+	<h3 id="input_submit">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/submit" target="_blank" rel="noopener">submit</a>"</h3>
+	<html-preview>
+		<input type="submit">
+	</html-preview>
+
+	<h3 id="input_image">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/image" target="_blank" rel="noopener">image</a>"</h3>
+	<html-preview>
+		<input type="image" src="./sample.png">
+	</html-preview>
+	<html-preview readonly>
+		<input type="image" src="./sample.png" style="width:14rem">
+	</html-preview>
+
+	<h3 id="input_reset">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/reset" target="_blank" rel="noopener">reset</a>"</h3>
+	<html-preview>
+		<input type="reset">
+	</html-preview>
+
+	<h3 id="input_file">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/file" target="_blank" rel="noopener">file</a>"</h3>
+	<html-preview>
+		<input type="file">
+	</html-preview>
+
+	<h3 id="input_text">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/text" target="_blank" rel="noopener">text</a>"</h3>
+	<html-preview>
+		<input type="text">
+	</html-preview>
+
+	<h3 id="input_search">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/search" target="_blank" rel="noopener">search</a>"</h3>
+	<html-preview>
+		<input type="search">
+	</html-preview>
+
+	<h3 id="input_password">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/password" target="_blank" rel="noopener">password</a>"</h3>
+	<html-preview>
+		<input type="password">
+	</html-preview>
+
+	<h3 id="input_url">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/url" target="_blank" rel="noopener">url</a>"</h3>
+	<html-preview>
+		<input type="url">
+	</html-preview>
+
+	<h3 id="input_email">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/email" target="_blank" rel="noopener">email</a>"</h3>
+	<html-preview>
+		<input type="email">
+	</html-preview>
+
+	<h3 id="input_tel">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/tel" target="_blank" rel="noopener">tel</a>"</h3>
+	<html-preview>
+		<input type="tel">
+	</html-preview>
+
+	<h3 id="input_number">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/number" target="_blank" rel="noopener">number</a>"</h3>
+	<html-preview>
+		<input type="number" min="0" value="10" step="1" max="20">
+	</html-preview>
+
+	<h3 id="input_range">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/range" target="_blank" rel="noopener">range</a>"</h3>
+	<html-preview>
+		<input type="range" min="0" max="100" value="50">
+	</html-preview>
+
+	<h3 id="input_radio">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/radio" target="_blank" rel="noopener">radio</a>"</h3>
+	<html-preview>
+		<label>
+			<input type="radio" name="group1" checked>
+			radio1
+		</label>
+		<label>
+			<input type="radio" name="group1">
+			radio2
+		</label>
+	</html-preview>
+	<html-preview readonly>
+		<label style="user-select:none;display:grid;grid-template-columns:2rem 1fr;font-size:2rem;">
+			<input type="radio" checked>
+			radio
+		</label>
+	</html-preview>
+
+	<h3 id="input_checkbox">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/checkbox" target="_blank" rel="noopener">checkbox</a>"</h3>
+	<html-preview>
+		<label style="user-select:none">
+			<input type="checkbox">
+			check1
+		</label>
+		<label style="user-select:none">
+			<input type="checkbox">
+			check2
+		</label>
+	</html-preview>
+	<html-preview readonly>
+		<label style="user-select:none;display:grid;grid-template-columns:2rem 1fr;font-size:2rem;">
+			<input type="checkbox" checked>
+			check
+		</label>
+	</html-preview>
+
+	<h3 id="input_datetime-local">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/datetime-local" target="_blank" rel="noopener">datetime-local</a>"</h3>
+	<html-preview>
+		<input type="datetime-local" value="2017-09-14T08:30">
+	</html-preview>
+
+	<h3 id="input_week">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/week" target="_blank" rel="noopener">week</a>"</h3>
+	<html-preview>
+		<input type="week" value="2017-W37">
+	</html-preview>
+
+	<h3 id="input_month">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/month" target="_blank" rel="noopener">month</a>"</h3>
+	<html-preview>
+		<input type="month" value="2017-09">
+	</html-preview>
+
+	<h3 id="input_date">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/date" target="_blank" rel="noopener">date</a>"</h3>
+	<html-preview>
+		<input type="date" value="2017-09-14">
+	</html-preview>
+
+	<h3 id="input_time">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/time" target="_blank" rel="noopener">time</a>"</h3>
+	<html-preview>
+		<input type="time" value="08:30">
+	</html-preview>
+
+	<h3 id="input_color">type="<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/color" target="_blank" rel="noopener">color</a>"</h3>
+	<html-preview>
+		<input type="color" value="#e66465">
+	</html-preview>
+
+	<h2 id="select">&lt;<a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/select" target="_blank" rel="noopener">select</a>&gt;</h2>
+
+	<h3 id="select_single">single</h3>
+	<html-preview>
+		<select>
+			<option>option1</option>
+			<option>option2</option>
+			<option>option3</option>
+		</select>
+	</html-preview>
+
+	<h3 id="select_multiple">multiple</h3>
+	<html-preview>
+		<select multiple>
+			<option>option1</option>
+			<option>option2</option>
+			<option>option3</option>
+		</select>
+	</html-preview>
+</body>
+</html>
