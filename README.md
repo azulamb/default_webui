@@ -9,4 +9,4 @@ https://azulamb.github.io/default_webui/
 * テキストが絡む場合は基本 `font-size` の指定で大きくすることができる
 * checkboxのようなUIは `display: grid` を使うことでその中いっぱいに広げることができる
   * `transform: scale()` よりも使いやすいはず
-* `<input type="color">` は今のところどうすればサイズ変更可能か不明
+* `<input type="color">` は `width` や `height` でサイズ指定可能
